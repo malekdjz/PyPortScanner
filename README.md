@@ -1,4 +1,4 @@
 # PyPortScanner
-*******NOT YET FINISHED*******
+	*******NOT YET FINISHED*******
  A simple port scanner written in python.
 
