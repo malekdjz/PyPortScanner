@@ -1,2 +1,3 @@
-# PyPort
- A port scanner writtten in python
+# PyPortScanner
+ A simple port scanner written in python.
+
