@@ -2,6 +2,7 @@
  A very simple port scanner written in python (scans TCP ports only).
 
 USAGE : 
+
 	"python pps.py www.example.com "
 
 OPTIONS:
