@@ -19,10 +19,10 @@ def loading(thread):
 def initArg():
     parser = argparse.ArgumentParser(prog='PyPort',description='A simple TCP port scanner in python')
     parser.add_argument('target',help='Specify the targets domain/ip')
-    parser.add_argument('--brute','-b',type=int,nargs=2,help='Brute force through a chosen range ex :"-b 1 80"')
+    parser.add_argument('--range','-r',type=int,nargs=2,help='Brute force through a chosen range ex :"-r 1 80"')
     parser.add_argument('--timeout','-t',type=float,help='Specify the timeout duration (default is 1 second)')
     args = parser.parse_args()
-    if args.brute[0]>args.brute[1]:
+    if args.range[0]>args.range[1]:
         raise argparse.ArgumentTypeError('Invalid port range.')
     if args.timeout is not None:
         if args.timeout <= 0:
@@ -30,13 +30,13 @@ def initArg():
     return args
 
 
-def scan(target,brute,timeout):
-    if brute is None:
+def scan(target,range,timeout):
+    if range is None:
         print("Scanning for common open TCP ports : ")
         ports = [80,443,8080,22,24,25,20,21,110,119,3306,123,3389,162,161,2096]
     else:
-        print('Scanning for port in the range of %s to %s : '%(brute[0],brute[1]))
-        ports = range(brute[0],brute[1]+1)
+        print('Scanning for port in the range of %s to %s : '%(range[0],range[1]))
+        ports = range(range[0],range[1]+1)
     for port in ports:
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         socket.setdefaulttimeout(timeout)
@@ -57,7 +57,7 @@ def scan(target,brute,timeout):
             pass
         s.close()
 
-        
+
 def main():
     
     args = initArg()
@@ -65,7 +65,7 @@ def main():
         timeout = 1
     else:
         timeout = args.timeout
-    scanner = threading.Thread(target=scan,args=(args.target,args.brute,timeout))
+    scanner = threading.Thread(target=scan,args=(args.target,args.range,timeout))
     scanner.start()
     loading(scanner)
     scanner.join()
